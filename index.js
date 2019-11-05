@@ -1,3 +1,5 @@
+const dotenv = require('dotenv').config();
+const config = require('./config');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -6,7 +8,13 @@ const content = require('./routes/contents');
 const reporter = require('./routes/reporter');
 const router = require('./routes/reporter.js');
 const auth = require('./routes/auth');
+const location = require('./routes/locations');
 
+
+if(!config.jwtPrivateKey){
+    console.log('ERROR: jwtPrivateKey is not defined');
+    process.exit(1);
+  }
 
 
 
@@ -24,6 +32,8 @@ app.use(bodyParser.json());
 
 app.use('/news', content);
 app.use('/reporter', reporter);
+app.use('/location', location);
+app.use('/reporter', auth);
 router.use(bodyParser.json());
 
 app.use((req, res, next) => {

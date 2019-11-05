@@ -1,3 +1,3 @@
 module.exports = {
-    jwtPrivateKey : process.env.maqoya_jwtPrivateKey,
+    jwtPrivateKey : process.env.LiveNews_jwtPrivateKey,
 }

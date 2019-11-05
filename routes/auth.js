@@ -6,6 +6,7 @@ const Joi = require('joi');
 const Jwt = require('jsonwebtoken');
 const reporter = require('./reporter');
 const content = require('./contents');
+const {Reporter} = require('../models/reporters');
 
 
 router.post('/login', async (req,res) =>{
@@ -15,7 +16,7 @@ router.post('/login', async (req,res) =>{
     let reporter = await Reporter.findOne({email:req.body.email});
     if (!reporter)  return res.status(400).json('Invalid email or password');
 
-    const validPassword = await bcrypt.compare(req.body.password, parent.password);
+    const validPassword = await bcrypt.compare(req.body.password, reporter.password);
     if (!validPassword) return res.status(400).json('Invalid email or password');
 
     const token = Jwt.sign({_id: reporter._id}, config.jwtPrivateKey);
